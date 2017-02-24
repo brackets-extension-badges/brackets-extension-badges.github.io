@@ -1,0 +1,1 @@
+# brackets-extension-badges.github.io
