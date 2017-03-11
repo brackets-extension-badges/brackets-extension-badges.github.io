@@ -1,1 +1,80 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Document</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="src/css/stylesheet.css">
+
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Brackets extension badges</a>
+    </div>
+</nav>
+<div class="container" id="app">
+    <div class="row">
+        <div class="col s12 m9 l10">
+            <p class="intro">
+                A download counter for your brackets extension
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName">
+                    <label for="extension-name-input">Extension name</label>
+                </div>
+                <!--<div class="col s2">-->
+                    <!--<a class="waves-effect waves-light btn" v-bind:class="{ disabled: !validName }" v-on:click="updateName">OK</a>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div v-if="validName" class="col s12 badges">
+            <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
+                <img v-bind:src="badge.imgUrl" v-bind:alt="badge.method">
+            </a>
+            <div v-for="badge in badges" v-bind:id="badge.method + '-modal'" class="modal">
+                <div class="modal-content">
+                    <h5>Image
+                        <a class="waves-effect waves-teal btn-flat clipboard" v-bind:data-clipboard-text="badge.imgUrl">
+                            <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
+                        </a>
+                    </h5>
+                    <code>{{ badge.imgUrl }}</code>
+                    <h5>Markdown
+                        <a class="waves-effect waves-teal btn-flat clipboard"
+                           v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)'">
+                            <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
+                        </a>
+                    </h5>
+                    <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)' }}</code>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Got it</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="server-url.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="src/js/forms.js"></script>
+<script src="src/js/vue.js"></script>
+<script src="src/js/init.js"></script>
+</body>
+</html>

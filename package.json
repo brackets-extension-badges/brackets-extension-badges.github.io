@@ -1,0 +1,16 @@
+{
+  "name": "brackets-extension-badges.github.io",
+  "description": "The front-end part of the brackets-extension-badges project",
+  "version": "1.0",
+  "author": {
+    "name": "Boris Kubiak",
+    "email": "  kubiakboris@gmail.com",
+    "url": "https://github.com/bokub"
+  },
+  "dependencies": {},
+  "license": "Apache 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brackets-extension-badges/brackets-extension-badges.github.io"
+  }
+}
