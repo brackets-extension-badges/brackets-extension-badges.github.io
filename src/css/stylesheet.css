@@ -1,3 +1,10 @@
+[v-cloak] {
+    display: none;
+}
+[v-cloak].progress{
+    display: block;
+    background-color: #e0e0e0;
+}
 .btn-flat.clipboard {
     padding: 0 1rem;
     margin-left: 10px;
@@ -15,6 +22,12 @@ a.badge img {
 .json-button {
     height: 26px;
     line-height: 26px;
+    margin: 0 15px;
+}
+
+code {
+    display: block;
+    white-space: pre-wrap
 }
 
 /* === Form colors === */

@@ -13,82 +13,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<header>
-    <nav class="top-nav green lighten-2">
-        <div class="container ">
-            <div class="nav-wrapper">
-                <span class="brand-logo">Brackets extension badges</span>
-            </div>
-        </div>
-    </nav>
-    <div class="progress grey lighten-2">
-        <div class="indeterminate green lighten-2"></div>
-    </div>
-</header>
-<div class="container" id="app">
-    <div class="row server-error hide">
-        <div class="card red accent-1 white-text">
-            <div class="card-content">
-                Oops, it looks like the server is down. Please come back later...
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <p class="intro"> A download counter for your brackets extension. </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName">
-                    <label for="extension-name-input">Extension name</label>
+<div class="wrap" id="app">
+    <header>
+        <nav class="top-nav green lighten-2">
+            <div class="container ">
+                <div class="nav-wrapper">
+                    <span class="brand-logo">Brackets extension badges</span>
                 </div>
-                <!--<div class="col s2">-->
-                <!--<a class="waves-effect waves-light btn" v-bind:class="{ disabled: !validName }" v-on:click="updateName">OK</a>-->
-                <!--</div>-->
+            </div>
+        </nav>
+        <div v-cloak="true" class="progress lighten-2"
+             v-bind:class="{ grey: status == 'loading', white: status != 'loading'}">
+            <div v-if="status == 'loading'" class="indeterminate green lighten-2"></div>
+        </div>
+    </header>
+    <div class="container">
+        <div v-cloak="true" v-if="status == 'error'" class="row server-error">
+            <div class="card red accent-1 white-text">
+                <div class="card-content">
+                    Oops, it looks like the server is down. Please come back later...
+                </div>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col s12">
+                <p class="intro"> A download counter for your brackets extension. </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName">
+                        <label for="extension-name-input">Extension name</label>
+                    </div>
+                    <!--<div class="col s2">-->
+                    <!--<a class="waves-effect waves-light btn" v-bind:class="{ disabled: !validName }" v-on:click="updateName">OK</a>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
 
-    <div class="row">
-        <div v-if="validName" class="col s12 badges hide">
-            <div class="card grey lighten-5">
-                <div class="card-content grey-text text-darken-3">
-                    <h3>{{ extensionName }}</h3>
-                    <br>
-                    <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge tooltipped">
-                        <img v-bind:src="badge.imgUrl" v-bind:alt="badge.method">
-                    </a>
-                    <br><br>
-                    <!--<p>-->
-                        <!--Just need the stats ?-->
-                        <!--<a class="waves-effect waves-light green btn json-button">get json</a>-->
-                    <!--</p>-->
-                    <div v-for="badge in badges" v-bind:id="badge.method + '-modal'" class="modal">
-                        <div class="modal-content">
-                            <h5>Image
-                                <a class="waves-effect waves-green btn-flat clipboard"
-                                   v-bind:data-clipboard-text="badge.imgUrl">
-                                    <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
-                                </a>
-                            </h5>
-                            <code>{{ badge.imgUrl }}</code>
-                            <h5>Markdown
-                                <a class="waves-effect waves-green btn-flat clipboard"
-                                   v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)'">
-                                    <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
-                                </a>
-                            </h5>
-                            <code>{{ '[![Downloads](' + badge.imgUrl +
-                                ')](https://brackets-extension-badges.github.io/)'
-                                }}</code>
+        <div class="row">
+            <div v-cloak="true" v-if="validName" class="col s12 badges">
+                <div class="card grey lighten-5">
+                    <div class="card-content grey-text text-darken-3">
+                        <h3>{{ extensionName }}</h3>
+                        <br>
+                        <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge tooltipped">
+                            <img src="#" v-bind:src="badge.imgUrl" v-bind:alt="badge.method">
+                        </a>
+                        <br><br><br>
+                        <p>
+                            Need raw data ?
+                            <a class="waves-effect waves-light green btn json-button" href="#json-modal"
+                               v-on:click="getJsonStats">
+                                Get JSON
+                            </a>
+                        </p>
+                        <div v-for="badge in badges" v-bind:id="badge.method + '-modal'" class="modal">
+                            <div class="modal-content">
+                                <h5>Image
+                                    <a class="waves-effect waves-green btn-flat clipboard"
+                                       v-bind:data-clipboard-text="badge.imgUrl">
+                                        <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
+                                    </a>
+                                </h5>
+                                <code>{{ badge.imgUrl }}</code>
+                                <h5>Markdown
+                                    <a class="waves-effect waves-green btn-flat clipboard"
+                                       v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)'">
+                                        <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
+                                    </a>
+                                </h5>
+                                <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)' }}</code>
+                            </div>
+
+                            <div class="modal-footer">
+                                <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
+                                    it</a>
+                            </div>
                         </div>
+                        <div class="modal" id="json-modal">
+                            <div class="modal-content">
+                                <h5>URL
+                                    <a class="waves-effect waves-green btn-flat clipboard"
+                                       v-bind:data-clipboard-text="json.url">
+                                        <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
+                                    </a>
+                                </h5>
+                                <code>{{ json.url }}</code>
+                                <h5 v-if="json.result != ''">Result</h5>
+                                <code v-if="json.result != ''">{{ json.result }}</code>
+                            </div>
 
-                        <div class="modal-footer">
-                            <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
-                                it</a>
+                            <div class="modal-footer">
+                                <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
+                                    it</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,5 +133,6 @@
 <script src="src/js/forms.js"></script>
 <!--Import javascript for the page -->
 <script src="src/js/vue.js"></script>
+
 </body>
 </html>
