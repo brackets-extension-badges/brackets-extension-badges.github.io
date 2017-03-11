@@ -48,6 +48,8 @@ new Vue({
             method: 'GET',
             dataType: 'json',
             success: function (data) {
+                $('.indeterminate').remove();
+                $('.progress').addClass('white').removeClass('grey');
                 Object.keys(data).forEach(function (key) {
                     data[key] = null
                 });
@@ -61,8 +63,7 @@ new Vue({
                 self.extensions = data;
             },
             error: function () {
-                //TODO
-                alert('ERROR');
+                $('.server-error').removeClass('hide');
             }
 
         });

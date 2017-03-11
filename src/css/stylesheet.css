@@ -12,6 +12,11 @@ a.badge img {
     font-weight: 300;
 }
 
+.json-button {
+    height: 26px;
+    line-height: 26px;
+}
+
 /* === Form colors === */
 
 .input-field label,
