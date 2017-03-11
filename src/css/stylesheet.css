@@ -3,6 +3,31 @@
     margin-left: 10px;
 }
 
-a.badge {
-    margin: 0 1rem;
+a.badge img {
+    margin: 2px 5px;
+}
+
+.intro {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+/* === Form colors === */
+
+.input-field label,
+.input-field input[type=text]:focus + label,
+.input-field .prefix.active,
+.input-field .autocomplete-content span.highlight {
+    color: #4caf50;
+}
+
+.input-field .autocomplete-content span:not(.highlight) {
+    color: #616161;
+}
+
+.input-field input[type=text].valid,
+.input-field input[type=text]:focus,
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #4caf50;
+    box-shadow: 0 1px 0 0 #4caf50;
 }
