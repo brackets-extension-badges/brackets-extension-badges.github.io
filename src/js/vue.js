@@ -10,6 +10,9 @@ new Vue({
         status: 'loading',
     },
     methods: {
+        /**
+         * Update the badges displayed on the page
+         */
         updateBadges: function () {
             this.badges = [];
             for (let method of this.methods) {
@@ -25,6 +28,9 @@ new Vue({
             };
         },
 
+        /**
+         * Get the input and check if it is a valid extension name
+         */
         updateName: function () {
             // Retrieved with jQuery as Vue.js cannot get it right in some cases including autocomplete
             this.extensionName = $('#extension-name-input').val();
@@ -34,6 +40,9 @@ new Vue({
             }
         },
 
+        /**
+         * Get the JSON-formatted stats when the 'GET JSON' button is clicked
+         */
         getJsonStats: function () {
             var self = this;
             $.ajax({
@@ -46,23 +55,21 @@ new Vue({
             });
         }
     },
+
+    /**
+     * Called when page is loaded
+     */
     created: function () {
         var self = this;
-        var clipboard = new Clipboard('.clipboard');
+        initClipboard();
 
-        clipboard.on('success', function (e) {
-            Materialize.toast('Copied to clipboard', 4000);
-            e.clearSelection();
-        });
-
-        clipboard.on('error', function (e) {
-            Materialize.toast('Cannot copy to clipboard :(', 4000);
-        });
-
+        // Get extension list from the server
         $.ajax({
             url: serverUrl + '/list.json',
             method: 'GET',
             dataType: 'json',
+            tryCount: 0,
+            retryLimit: 3,
             success: function (data) {
                 Object.keys(data).forEach(function (key) {
                     data[key] = null
@@ -77,7 +84,13 @@ new Vue({
                 self.status = 'loaded';
             },
             error: function () {
-                self.status = 'error';
+                this.tryCount++;
+                if (this.tryCount <= this.retryLimit) {
+                    //try again
+                    $.ajax(this);
+                } else {
+                    self.status = 'error';
+                }
             }
 
         });
@@ -89,5 +102,14 @@ new Vue({
     }
 });
 
-
+function initClipboard() {
+    var clipboard = new Clipboard('.clipboard');
+    clipboard.on('success', function (e) {
+        Materialize.toast('Copied to clipboard', 4000);
+        e.clearSelection();
+    });
+    clipboard.on('error', function (e) {
+        Materialize.toast('Cannot copy to clipboard :(', 4000);
+    });
+}
 
