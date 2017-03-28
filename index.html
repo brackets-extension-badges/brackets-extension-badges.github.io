@@ -47,7 +47,7 @@
             <div class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName">
+                        <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName" v-bind:value="extensionName">
                         <label for="extension-name-input">Extension name</label>
                     </div>
                     <!--<div class="col s2">-->
@@ -61,15 +61,21 @@
             <div v-cloak="true" v-if="validName" class="col s12 badges">
                 <div class="card grey lighten-5">
                     <div class="card-content grey-text text-darken-3">
+                        <div class="right">
+                            <a class="btn-floating btn-large waves-effect waves-light green lighten-1 clipboard" id="btn-share"
+                               v-bind:data-clipboard-text="'https://brackets-extension-badges.github.io#' + extensionName">
+                                <i class="material-icons">share</i>
+                            </a>
+                        </div>
                         <h3>{{ extensionName }}</h3>
                         <br>
-                        <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge tooltipped">
+                        <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
                             <img src="#" v-bind:src="badge.imgUrl" v-bind:alt="badge.method">
                         </a>
                         <br><br><br>
                         <p>
                             Need raw data ?
-                            <a class="waves-effect waves-light green btn json-button" href="#json-modal"
+                            <a class="waves-effect waves-light green lighten-1 btn json-button" href="#json-modal"
                                v-on:click="getJsonStats">
                                 Get JSON
                             </a>

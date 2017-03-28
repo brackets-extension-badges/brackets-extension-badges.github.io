@@ -14,6 +14,7 @@ new Vue({
          * Update the badges displayed on the page
          */
         updateBadges: function () {
+            var self = this;
             this.badges = [];
             for (let method of this.methods) {
                 let imgUrl = serverUrl + '/' + this.extensionName + '/' + method + '.svg';
@@ -26,6 +27,20 @@ new Vue({
                 url: serverUrl + '/' + this.extensionName + '/stats.json',
                 result: ''
             };
+
+            // Manage tooltips
+            Vue.nextTick(function () {
+                $('.modal').modal();
+                $('.badge').tooltip({
+                    position: 'top',
+                    tooltip: 'Click me!',
+                });
+                $('#btn-share').tooltip({
+                    position: 'left',
+                    tooltip: 'brackets-extension-badges.github.io#' + self.extensionName,
+                    delay: 200,
+                });
+            });
         },
 
         /**
@@ -61,6 +76,13 @@ new Vue({
      */
     created: function () {
         var self = this;
+
+        // Auto fill input
+        var hash = window.location.hash.replace('#', '');
+        if (hash != '') {
+            this.extensionName = hash;
+        }
+
         initClipboard();
 
         // Get extension list from the server
@@ -82,6 +104,7 @@ new Vue({
                 });
                 self.extensions = data;
                 self.status = 'loaded';
+                self.updateName();
             },
             error: function () {
                 this.tryCount++;
@@ -92,24 +115,16 @@ new Vue({
                     self.status = 'error';
                 }
             }
-
         });
     },
-    updated: function () {
-        $('.modal').modal();
-        $('.tooltipped').tooltip({position: 'top', tooltip: 'Click me!'});
-        console.log('update');
-    }
 });
 
 function initClipboard() {
     var clipboard = new Clipboard('.clipboard');
-    clipboard.on('success', function (e) {
-        Materialize.toast('Copied to clipboard', 4000);
-        e.clearSelection();
+    clipboard.on('success', function () {
+        Materialize.toast('Copied to clipboard', 1500);
     });
-    clipboard.on('error', function (e) {
-        Materialize.toast('Cannot copy to clipboard :(', 4000);
+    clipboard.on('error', function () {
+        Materialize.toast('Cannot copy to clipboard :(', 1500);
     });
 }
-
