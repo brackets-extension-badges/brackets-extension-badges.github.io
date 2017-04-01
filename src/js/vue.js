@@ -10,6 +10,7 @@ new Vue({
         status: 'loading',
     },
     methods: {
+
         /**
          * Update the badges displayed on the page
          */
@@ -37,10 +38,13 @@ new Vue({
                 });
                 $('#btn-share').tooltip({
                     position: 'left',
-                    tooltip: 'brackets-extension-badges.github.io#' + self.extensionName,
+                    tooltip: self.getShareLink(),
                     delay: 200,
                 });
             });
+
+            // Edit URL
+            location.hash = this.extensionName;
         },
 
         /**
@@ -68,6 +72,13 @@ new Vue({
                     self.json.result = JSON.stringify(data, null, 2);
                 }
             });
+        },
+
+        /**
+         * Get the URL of to share
+         */
+        getShareLink: function(){
+            return 'https://brackets-extension-badges.github.io#' + this.extensionName;
         }
     },
 
@@ -79,7 +90,7 @@ new Vue({
 
         // Auto fill input
         var hash = window.location.hash.replace('#', '');
-        if (hash != '') {
+        if (hash !== '') {
             this.extensionName = hash;
         }
 

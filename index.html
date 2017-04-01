@@ -50,9 +50,6 @@
                         <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName" v-bind:value="extensionName">
                         <label for="extension-name-input">Extension name</label>
                     </div>
-                    <!--<div class="col s2">-->
-                    <!--<a class="waves-effect waves-light btn" v-bind:class="{ disabled: !validName }" v-on:click="updateName">OK</a>-->
-                    <!--</div>-->
                 </div>
             </div>
         </div>
@@ -63,7 +60,7 @@
                     <div class="card-content grey-text text-darken-3">
                         <div class="right">
                             <a class="btn-floating btn-large waves-effect waves-light green lighten-1 clipboard" id="btn-share"
-                               v-bind:data-clipboard-text="'https://brackets-extension-badges.github.io#' + extensionName">
+                               v-bind:data-clipboard-text="getShareLink()">
                                 <i class="material-icons">share</i>
                             </a>
                         </div>
@@ -99,7 +96,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
+                                <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
                                     it</a>
                             </div>
                         </div>
@@ -117,7 +114,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
+                                <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
                                     it</a>
                             </div>
                         </div>
