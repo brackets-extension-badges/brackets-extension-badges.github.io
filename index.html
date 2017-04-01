@@ -4,33 +4,45 @@
     <meta charset="UTF-8">
     <title>Brackets extension badges</title>
 
-    <link rel="icon" type="image/x-icon" href="src/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <!--Import additional CSS-->
-    <link rel="stylesheet" href="src/css/stylesheet.css">
+    <!--Import custom css-->
+    <link rel="stylesheet" href="css/stylesheet.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<div class="wrap" id="app">
-    <header>
-        <nav class="top-nav green lighten-2">
-            <div class="container ">
-                <div class="nav-wrapper">
-                    <span class="brand-logo">Brackets extension badges</span>
-                </div>
-            </div>
-        </nav>
-        <div v-cloak="true" class="progress lighten-2"
-             v-bind:class="{ grey: status == 'loading', white: status != 'loading'}">
-            <div v-if="status == 'loading'" class="indeterminate green lighten-2"></div>
-        </div>
-    </header>
+<!--Header-->
+<header class="section teal lighten-2" id="index-banner">
     <div class="container">
+        <div class="row">
+            <div class="col s12 m9">
+                <h2 class="header center-on-small-only">
+                    Brackets extension badges
+                </h2>
+                <h4 class="light white-text center-on-small-only">
+                    Download counters for your brackets extension
+                </h4>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<main>
+    <!--Loader-->
+    <div v-cloak="true" class="progress lighten-2"
+         v-bind:class="{ grey: status == 'loading', white: status != 'loading'}">
+        <div v-if="status == 'loading'" class="indeterminate teal lighten-2"></div>
+    </div>
+
+    <div class="container">
+        <!--Server error card-->
         <div v-cloak="true" v-if="status == 'error'" class="row server-error">
             <div class="card red accent-1 white-text">
                 <div class="card-content">
@@ -38,92 +50,119 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col s12">
-                <p class="intro"> A download counter for your brackets extension. </p>
-            </div>
-        </div>
+
+        <!--User input-->
         <div class="row">
             <div class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName" v-bind:value="extensionName">
+                        <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName"
+                               v-bind:value="extensionName">
                         <label for="extension-name-input">Extension name</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
+        <!--Result-->
+        <div class="row result">
             <div v-cloak="true" v-if="validName" class="col s12 badges">
-                <div class="card grey lighten-5">
-                    <div class="card-content grey-text text-darken-3">
-                        <div class="right">
-                            <a class="btn-floating btn-large waves-effect waves-light green lighten-1 clipboard" id="btn-share"
-                               v-bind:data-clipboard-text="getShareLink()">
-                                <i class="material-icons">share</i>
-                            </a>
-                        </div>
-                        <h3>{{ extensionName }}</h3>
-                        <br>
-                        <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
-                            <img src="#" v-bind:src="badge.imgUrl" v-bind:alt="badge.method">
+                <div class="grey-text text-darken-3">
+                    <div class="right">
+                        <a class="btn-floating btn-large waves-effect waves-light teal lighten-1 clipboard" id="btn-share"
+                           v-bind:data-clipboard-text="getShareLink()">
+                            <i class="material-icons">share</i>
                         </a>
-                        <br><br><br>
-                        <p>
-                            Need raw data ?
-                            <a class="waves-effect waves-light green lighten-1 btn json-button" href="#json-modal"
-                               v-on:click="getJsonStats">
-                                Get JSON
-                            </a>
-                        </p>
-                        <div v-for="badge in badges" v-bind:id="badge.method + '-modal'" class="modal">
-                            <div class="modal-content">
-                                <h5>Image
-                                    <a class="waves-effect waves-green btn-flat clipboard"
-                                       v-bind:data-clipboard-text="badge.imgUrl">
-                                        <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
-                                    </a>
-                                </h5>
-                                <code>{{ badge.imgUrl }}</code>
-                                <h5>Markdown
-                                    <a class="waves-effect waves-green btn-flat clipboard"
-                                       v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)'">
-                                        <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
-                                    </a>
-                                </h5>
-                                <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)' }}</code>
-                            </div>
-
-                            <div class="modal-footer">
-                                <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
-                                    it</a>
-                            </div>
+                    </div>
+                    <h3>{{ extensionName }}</h3>
+                    <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
+                        <img src="#" v-bind:src="badge.imgUrl" v-bind:alt="badge.method" class="hoverable">
+                    </a>
+                    <p class="description">
+                        Click on the badges to get links and markdown syntax
+                        <br>
+                        Add them to your Github <tt>README.md</tt> to show your extension's popularity!
+                    </p>
+                    <p class="raw-data">
+                        Need raw data ?
+                        <a class="waves-effect waves-light teal lighten-1 btn json-button" href="#json-modal"
+                           v-on:click="getJsonStats">
+                            Get JSON
+                        </a>
+                    </p>
+                    <div v-for="badge in badges" v-bind:id="badge.method + '-modal'" class="modal">
+                        <div class="modal-content">
+                            <h5>Image
+                                <a class="waves-effect waves-teal btn-flat clipboard"
+                                   v-bind:data-clipboard-text="badge.imgUrl">
+                                    <img src="img/clippy.svg" height="18" alt="Copy to clipboard">
+                                </a>
+                            </h5>
+                            <code>{{ badge.imgUrl }}</code>
+                            <h5>Markdown
+                                <a class="waves-effect waves-teal btn-flat clipboard"
+                                   v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)'">
+                                    <img src="img/clippy.svg" height="18" alt="Copy to clipboard">
+                                </a>
+                            </h5>
+                            <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)' }}</code>
                         </div>
-                        <div class="modal" id="json-modal">
-                            <div class="modal-content">
-                                <h5>URL
-                                    <a class="waves-effect waves-green btn-flat clipboard"
-                                       v-bind:data-clipboard-text="json.url">
-                                        <img src="src/img/clippy.svg" height="18" alt="Copy to clipboard">
-                                    </a>
-                                </h5>
-                                <code>{{ json.url }}</code>
-                                <h5 v-if="json.result != ''">Result</h5>
-                                <code v-if="json.result != ''">{{ json.result }}</code>
-                            </div>
 
-                            <div class="modal-footer">
-                                <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Got
-                                    it</a>
-                            </div>
+                        <div class="modal-footer">
+                            <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-teal btn-flat">
+                                Got it
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal" id="json-modal">
+                        <div class="modal-content">
+                            <h5>URL
+                                <a class="waves-effect waves-teal btn-flat clipboard"
+                                   v-bind:data-clipboard-text="json.url">
+                                    <img src="img/clippy.svg" height="18" alt="Copy to clipboard">
+                                </a>
+                            </h5>
+                            <code>{{ json.url }}</code>
+                            <h5 v-if="json.result != ''">Result</h5>
+                            <code v-if="json.result != ''">{{ json.result }}</code>
+                        </div>
+
+                        <div class="modal-footer">
+                            <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-teal btn-flat">
+                                Got it
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
+</main>
+
+<!--Footer-->
+<footer class="page-footer teal lighten-2">
+    <div class="container">
+        <div class="row">
+            <div class="col s4 copyright">
+                <a class="grey-text text-lighten-4"
+                   href="https://github.com/bokub" target="_blank">
+                    © 2017 bokub
+                </a>
+            </div>
+            <div class="col s4 center">
+                <a href="https://github.com/brackets-extension-badges" target="_blank">
+                    <img src="img/github-logo.png" height="32" alt="Github logo">
+                </a>
+            </div>
+            <div class="s4">
+                <div class="right">
+                    <a v-cloak class="github-button" href="https://github.com/brackets-extension-badges/brackets-extension-badges.github.io" data-icon="octicon-star" data-style="mega" data-count-href="/brackets-extension-badges/brackets-extension-badges.github.io/stargazers" data-count-api="/repos/brackets-extension-badges/brackets-extension-badges.github.io#stargazers_count">Star</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 <!--Set the server URL-->
 <script src="server-url.js"></script>
 <!--Import jQuery-->
@@ -136,9 +175,10 @@
 <!--Import Vue.js-->
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!--Import overridden materialize.js -->
-<script src="src/js/forms.js"></script>
+<script src="js/forms.js"></script>
 <!--Import javascript for the page -->
-<script src="src/js/vue.js"></script>
-
+<script src="js/vue.js"></script>
+<!-- Github button -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

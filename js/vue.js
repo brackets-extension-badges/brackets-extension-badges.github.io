@@ -1,5 +1,5 @@
 new Vue({
-    el: '#app',
+    el: 'main',
     data: {
         badges: [],
         json: {url: '', result: ''},
@@ -29,18 +29,9 @@ new Vue({
                 result: ''
             };
 
-            // Manage tooltips
+            // Manage modals
             Vue.nextTick(function () {
                 $('.modal').modal();
-                $('.badge').tooltip({
-                    position: 'top',
-                    tooltip: 'Click me!',
-                });
-                $('#btn-share').tooltip({
-                    position: 'left',
-                    tooltip: self.getShareLink(),
-                    delay: 200,
-                });
             });
 
             // Edit URL
@@ -79,7 +70,7 @@ new Vue({
          */
         getShareLink: function(){
             return 'https://brackets-extension-badges.github.io#' + this.extensionName;
-        }
+        },
     },
 
     /**
