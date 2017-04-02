@@ -20,4 +20,4 @@ This repository is the source for the [brackets-extension-badges](https://bracke
 
 ## Back-end
 
-The statistics and the badge generation are both managed by a back-end server, avaliable [here](https://github.com/brackets-extension-badges/badge-provider-nodejs) in Node.js, and [here](https://github.com/brackets-extension-badges/badge-provider-php) in PHP (using the Lumen framework).
+The statistics and the badge generation are both managed by a back-end server, available [here](https://github.com/brackets-extension-badges/badge-provider-nodejs) in Node.js, and [here](https://github.com/brackets-extension-badges/badge-provider-php) in PHP (using the Lumen framework).
