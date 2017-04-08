@@ -25,12 +25,12 @@
     <div class="container">
         <div class="row">
             <div class="col s12 m9">
-                <h2 class="header center-on-small-only">
+                <h1 class="header center-on-small-only">
                     Brackets extension badges
-                </h2>
-                <h4 class="light white-text center-on-small-only">
+                </h1>
+                <h2 class="light white-text center-on-small-only">
                     Download counters for your brackets extension
-                </h4>
+                </h2>
             </div>
         </div>
     </div>
@@ -54,23 +54,30 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="section">
+                <p class="main-description col m12">
+                    <b>Brackets extension badges</b> are download counters for your Brackets extensions, as Adobe
+                    doesn't provide any official way to retrieve statistics, even for your own extension.
+                    <br>
+                    <br>
+                    Just search for your extension to start:
+                </p>
+            </div>
+        </div>
 
         <!--User input-->
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName"
-                               v-bind:value="extensionName">
-                        <label for="extension-name-input">Extension name</label>
-                    </div>
-                </div>
+        <div class="row input">
+            <div class="input-field col s12">
+                <input type="text" id="extension-name-input" class="autocomplete" v-on:keyup="updateName"
+                       v-bind:value="extensionName">
+                <label for="extension-name-input">Extension name</label>
             </div>
         </div>
 
         <!--Result-->
-        <div class="row result">
-            <div v-cloak="true" v-if="validName" class="col s12 badges">
+        <div v-cloak="true" v-if="validName" class="row result card z-depth-4">
+            <div class="col s12 badges">
                 <div class="grey-text text-darken-3">
                     <div class="right">
                         <a class="btn-floating btn-large waves-effect waves-light teal lighten-1 clipboard" id="btn-share"
@@ -82,9 +89,13 @@
                     <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
                         <img src="#" v-bind:src="badge.imgUrl" v-bind:alt="badge.method" class="hoverable">
                     </a>
-                    <p class="description">
-                        <b>Brackets extension badges</b> are download counters for your Brackets extensions, as Adobe
-                        doesn't provide any official way to retrieve statistics, even for your own extension.
+                    <p v-if="typeof(json.data) !== 'undefined'" class="statistics-description">
+                        Overall, <b>{{ json.data.name }}</b> have been downloaded {{ format(json.data.total) }} times, including
+                        {{ format(json.data.lastVersion) }} downloads for the last version.
+                        <br>
+                        The extension have been downloaded {{ format(json.data.week) }} times over the last 7 days, which
+                        represents around {{ format(json.data.week / 7) }} downloads per day.
+                        <br>
                         <br>
                         Click on the badges to get links and markdown syntax, and add them to your Github
                         <tt>README.md</tt> to show your extension's popularity!
@@ -177,6 +188,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 <!--Import clipboard.js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+<!--Import numeral.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <!--Import Vue.js-->
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!--Import overridden materialize.js -->

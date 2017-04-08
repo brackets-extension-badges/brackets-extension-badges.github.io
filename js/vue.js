@@ -2,7 +2,7 @@ new Vue({
     el: 'main',
     data: {
         badges: [],
-        json: {url: '', result: ''},
+        json: {url: '', result: '', data: {}},
         extensions: {},
         extensionName: '',
         validName: false,
@@ -47,11 +47,12 @@ new Vue({
             this.validName = this.extensions.hasOwnProperty(this.extensionName);
             if (this.validName) {
                 this.updateBadges();
+                this.getJsonStats();
             }
         },
 
         /**
-         * Get the JSON-formatted stats when the 'GET JSON' button is clicked
+         * Get the JSON-formatted stats
          */
         getJsonStats: function () {
             var self = this;
@@ -61,6 +62,7 @@ new Vue({
                 dataType: 'json',
                 success: function (data) {
                     self.json.result = JSON.stringify(data, null, 2);
+                    self.json.data = data;
                 }
             });
         },
@@ -71,6 +73,14 @@ new Vue({
         getShareLink: function(){
             return 'https://brackets-extension-badges.github.io#' + this.extensionName;
         },
+
+        /**
+         * Format a number with numeral
+         * @param number
+         */
+        format: function (number) {
+            return numeral(number).format('0,0');
+        }
     },
 
     /**
