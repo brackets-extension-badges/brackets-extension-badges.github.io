@@ -87,7 +87,7 @@
                     </div>
                     <h3>{{ extensionName }}</h3>
                     <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
-                        <img src="#" v-bind:src="badge.imgUrl" v-bind:alt="badge.method" class="hoverable">
+                        <img src="#" v-bind:src="badge.imgUrl" alt="badge" v-bind:alt="badge.method + ' downloads of ' + extensionName" class="hoverable">
                     </a>
                     <p v-if="typeof(json.data) !== 'undefined'" class="statistics-description">
                         Overall, <b>{{ json.data.name }}</b> have been downloaded {{ format(json.data.total) }} times, including
@@ -191,7 +191,7 @@
 <!--Import numeral.js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <!--Import Vue.js-->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
 <!--Import overridden materialize.js -->
 <script src="js/forms.js"></script>
 <!--Import javascript for the page -->

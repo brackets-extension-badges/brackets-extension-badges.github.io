@@ -1,3 +1,5 @@
+"use strict";
+
 new Vue({
     el: 'main',
     data: {
@@ -15,7 +17,6 @@ new Vue({
          * Update the badges displayed on the page
          */
         updateBadges: function () {
-            var self = this;
             this.badges = [];
             for (let method of this.methods) {
                 let imgUrl = serverUrl + '/' + this.extensionName + '/' + method + '.svg';
