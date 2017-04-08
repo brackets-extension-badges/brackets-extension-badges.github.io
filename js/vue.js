@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 new Vue({
     el: 'main',
@@ -8,7 +8,8 @@ new Vue({
         extensions: {},
         extensionName: '',
         validName: false,
-        methods: ["total", "last-version", "week", "day"],
+        ranking: '',
+        methods: ['total', 'last-version', 'week', 'day'],
         status: 'loading',
     },
     methods: {
@@ -25,18 +26,12 @@ new Vue({
                     imgUrl,
                 });
             }
-            this.json = {
-                url: serverUrl + '/' + this.extensionName + '/stats.json',
-                result: ''
-            };
+            this.json.url = serverUrl + '/' + this.extensionName + '/stats.json';
 
             // Manage modals
             Vue.nextTick(function () {
                 $('.modal').modal();
             });
-
-            // Edit URL
-            location.hash = this.extensionName;
         },
 
         /**
@@ -46,16 +41,25 @@ new Vue({
             // Retrieved with jQuery as Vue.js cannot get it right in some cases including autocomplete
             this.extensionName = $('#extension-name-input').val();
             this.validName = this.extensions.hasOwnProperty(this.extensionName);
-            if (this.validName) {
-                this.updateBadges();
-                this.getJsonStats();
+            if (!this.validName) {
+                return;
             }
+            this.updateBadges();
+            this.getJsonStats();
+            this.updateRanking();
+
+            // Edit URL
+            location.hash = this.extensionName;
         },
 
         /**
          * Get the JSON-formatted stats
          */
         getJsonStats: function () {
+            if(this.json.data.name === this.extensionName){
+                return
+            }
+
             var self = this;
             $.ajax({
                 url: this.json.url,
@@ -69,9 +73,31 @@ new Vue({
         },
 
         /**
+         * Compute the extension's popularity ranking
+         */
+        updateRanking: function () {
+            var higher = 0,
+                lower = 0,
+                current = this.extensions[this.extensionName];
+
+            for (var extension in this.extensions) {
+                if (!this.extensions.hasOwnProperty(extension)) {
+                    continue;
+                }
+                if (this.extensions[extension] < current) {
+                    lower++;
+                } else {
+                    higher++;
+                }
+            }
+
+            this.ranking = Math.ceil( 100 * higher / (lower + higher));
+        },
+
+        /**
          * Get the URL of to share
          */
-        getShareLink: function(){
+        getShareLink: function () {
             return 'https://brackets-extension-badges.github.io#' + this.extensionName;
         },
 
@@ -88,10 +114,10 @@ new Vue({
      * Called when page is loaded
      */
     created: function () {
-        var self = this;
+        var self = this,
+            hash = window.location.hash.replace('#', '');
 
         // Auto fill input
-        var hash = window.location.hash.replace('#', '');
         if (hash !== '') {
             this.extensionName = hash;
         }
@@ -107,7 +133,8 @@ new Vue({
             retryLimit: 3,
             success: function (data) {
                 Object.keys(data).forEach(function (key) {
-                    data[key] = null
+                    self.extensions[key] = data[key];
+                    data[key] = null;
                 });
                 $('input.autocomplete').autocomplete({
                     data,
@@ -115,7 +142,7 @@ new Vue({
                         self.updateName();
                     }
                 });
-                self.extensions = data;
+                // self.extensions = data;
                 self.status = 'loaded';
                 self.updateName();
             },

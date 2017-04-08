@@ -58,7 +58,7 @@
             <div class="section">
                 <p class="main-description col m12">
                     <b>Brackets extension badges</b> are download counters for your Brackets extensions, as Adobe
-                    doesn't provide any official way to retrieve statistics, even for your own extension.
+                    doesn't provide any official way to retrieve download statistics, even for your own extension.
                     <br>
                     <br>
                     Just search for your extension to start:
@@ -89,12 +89,16 @@
                     <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
                         <img src="#" v-bind:src="badge.imgUrl" alt="badge" v-bind:alt="badge.method + ' downloads of ' + extensionName" class="hoverable">
                     </a>
-                    <p v-if="typeof(json.data) !== 'undefined'" class="statistics-description">
-                        Overall, <b>{{ json.data.name }}</b> have been downloaded {{ format(json.data.total) }} times, including
-                        {{ format(json.data.lastVersion) }} downloads for the last version.
+                    <p v-if="typeof(json.data.name) !== 'undefined'" class="statistics-description">
+                        Overall, <b>{{ json.data.name }}</b> has been downloaded {{ format(json.data.total) }} times, including
+                        {{ format(json.data.lastVersion) }} downloads for the last version
                         <br>
-                        The extension have been downloaded {{ format(json.data.week) }} times over the last 7 days, which
-                        represents around {{ format(json.data.week / 7) }} downloads per day.
+                        It has been downloaded {{ format(json.data.week) }} times over the last 7 days, which
+                        represents around {{ format(json.data.week / 7) }} downloads per day
+                        <br>
+                        <br>
+                        Compared to other extensions, <b>{{ json.data.name }}</b> is part of the top {{ ranking }}%
+                        in terms of number of downloads
                         <br>
                         <br>
                         Click on the badges to get links and markdown syntax, and add them to your Github
@@ -102,8 +106,7 @@
                     </p>
                     <p class="raw-data">
                         Need raw data ?
-                        <a class="waves-effect waves-light teal lighten-1 btn json-button" href="#json-modal"
-                           v-on:click="getJsonStats">
+                        <a class="waves-effect waves-light teal lighten-1 btn json-button" href="#json-modal">
                             Get JSON
                         </a>
                     </p>
@@ -118,11 +121,11 @@
                             <code>{{ badge.imgUrl }}</code>
                             <h5>Markdown
                                 <a class="waves-effect waves-teal btn-flat clipboard"
-                                   v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)'">
+                                   v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')'">
                                     <img src="img/clippy.svg" height="18" alt="Copy to clipboard">
                                 </a>
                             </h5>
-                            <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io/)' }}</code>
+                            <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')' }}</code>
                         </div>
 
                         <div class="modal-footer">
