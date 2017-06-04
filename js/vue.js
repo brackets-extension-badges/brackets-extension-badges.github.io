@@ -19,11 +19,11 @@ new Vue({
          */
         updateBadges: function () {
             this.badges = [];
-            for (let method of this.methods) {
-                let imgUrl = serverUrl + '/' + this.extensionName + '/' + method + '.svg';
+            for (var method of this.methods) {
+                var imgUrl = serverUrl + '/' + this.extensionName + '/' + method + '.svg';
                 this.badges.push({
-                    method,
-                    imgUrl,
+                    method: method,
+                    imgUrl: imgUrl,
                 });
             }
             this.json.url = serverUrl + '/' + this.extensionName + '/stats.json';
@@ -56,13 +56,13 @@ new Vue({
          * Get the JSON-formatted stats
          */
         getJsonStats: function () {
-            if(this.json.data.name === this.extensionName){
+            if (this.json.data.name === this.extensionName) {
                 return
             }
 
             var self = this;
             $.ajax({
-                url: this.json.url,
+                url: this.json.url + '?do_not_track',
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -91,7 +91,7 @@ new Vue({
                 }
             }
 
-            this.ranking = Math.ceil( 100 * higher / (lower + higher));
+            this.ranking = Math.ceil(100 * higher / (lower + higher));
         },
 
         /**
@@ -126,7 +126,7 @@ new Vue({
 
         // Get extension list from the server
         $.ajax({
-            url: serverUrl + '/list.json',
+            url: serverUrl + '/list.json?do_not_track',
             method: 'GET',
             dataType: 'json',
             tryCount: 0,

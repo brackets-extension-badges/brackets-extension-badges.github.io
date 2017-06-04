@@ -87,7 +87,7 @@
                     </div>
                     <h3>{{ extensionName }}</h3>
                     <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
-                        <img src="#" v-bind:src="badge.imgUrl" alt="badge" v-bind:alt="badge.method + ' downloads of ' + extensionName" class="hoverable">
+                        <img src="#" v-bind:src="badge.imgUrl + '?do_not_track'" alt="badge" v-bind:alt="badge.method + ' downloads of ' + extensionName" class="hoverable">
                     </a>
                     <p v-if="typeof(json.data.name) !== 'undefined'" class="statistics-description">
                         Overall, <b>{{ json.data.name }}</b> has been downloaded {{ format(json.data.total) }} times, including
