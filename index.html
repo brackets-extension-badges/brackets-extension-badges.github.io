@@ -80,10 +80,9 @@
             <div class="col s12 badges">
                 <div class="grey-text text-darken-3">
                     <div class="right">
-                        <a class="btn-floating btn-large waves-effect waves-light teal lighten-1 clipboard" id="btn-share"
-                           v-bind:data-clipboard-text="getShareLink()">
-                            <i class="material-icons">share</i>
-                        </a>
+                        <button class="btn-floating btn-large waves-effect waves-light teal lighten-1 clipboard" v-bind:data-clipboard-text="getLink()">
+                            <i class="material-icons">content_copy</i>
+                        </button>
                     </div>
                     <h3>{{ extensionName }}</h3>
                     <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
@@ -106,41 +105,36 @@
                     </p>
                     <p class="raw-data">
                         Need raw data ?
-                        <a class="waves-effect waves-light teal lighten-1 btn json-button" href="#json-modal">
-                            Get JSON
-                        </a>
+                        <button class="waves-effect waves-light teal lighten-1 btn json-button" data-target="json-modal">Get JSON</button>
                     </p>
                     <div v-for="badge in badges" v-bind:id="badge.method + '-modal'" class="modal">
                         <div class="modal-content">
                             <h5>Image
-                                <a class="waves-effect waves-teal btn-flat clipboard"
-                                   v-bind:data-clipboard-text="badge.imgUrl">
-                                    <img src="img/clippy.svg" height="18" alt="Copy to clipboard">
-                                </a>
+                                <button class="btn-flat waves-effect waves-teal clipboard"
+                                    v-bind:data-clipboard-text="badge.imgUrl">
+                                    <i class="material-icons">content_copy</i>
+                                </button>
                             </h5>
                             <code>{{ badge.imgUrl }}</code>
                             <h5>Markdown
-                                <a class="waves-effect waves-teal btn-flat clipboard"
-                                   v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')'">
-                                    <img src="img/clippy.svg" height="18" alt="Copy to clipboard">
-                                </a>
+                                <button class="btn-flat waves-effect waves-teal clipboard"
+                                    v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')'">
+                                    <i class="material-icons">content_copy</i>
+                                </button>
                             </h5>
                             <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')' }}</code>
                         </div>
 
                         <div class="modal-footer">
-                            <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-teal btn-flat">
-                                Got it
-                            </a>
+                            <button class="btn-flat waves-effect waves-teal modal-action modal-close">Got it</button>
                         </div>
                     </div>
                     <div class="modal" id="json-modal">
                         <div class="modal-content">
                             <h5>URL
-                                <a class="waves-effect waves-teal btn-flat clipboard"
-                                   v-bind:data-clipboard-text="json.url">
-                                    <img src="img/clippy.svg" height="18" alt="Copy to clipboard">
-                                </a>
+                                <button class="btn-flat waves-effect waves-teal clipboard" v-bind:data-clipboard-text="json.url">
+                                    <i class="material-icons">content_copy</i>
+                                </button>
                             </h5>
                             <code>{{ json.url }}</code>
                             <h5 v-if="json.result != ''">Result</h5>
@@ -148,9 +142,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-teal btn-flat">
-                                Got it
-                            </a>
+                            <button class="btn-flat waves-effect waves-teal modal-action modal-close">Got it</button>
                         </div>
                     </div>
                 </div>
