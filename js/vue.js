@@ -97,7 +97,7 @@ new Vue({
         /**
          * Get the URL of to share
          */
-        getShareLink: function () {
+        getLink: function () {
             return 'https://brackets-extension-badges.github.io#' + this.extensionName;
         },
 
