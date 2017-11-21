@@ -122,7 +122,7 @@
                                     <i class="material-icons">content_copy</i>
                                 </button>
                             </h5>
-                            <code>{{ '[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')' }}</code>
+                            <code>{{ '[![' + (badge.method === 'version' ? 'Version' : 'Downloads') + '](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')' }}</code>
                         </div>
 
                         <div class="modal-footer">

@@ -9,7 +9,7 @@ new Vue({
         extensionName: '',
         validName: false,
         ranking: '',
-        methods: ['total', 'last-version', 'week', 'day'],
+        methods: ['total', 'last-version', 'week', 'day', 'version'],
         status: 'loading',
     },
     methods: {
