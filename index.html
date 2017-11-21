@@ -9,7 +9,7 @@
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <!--Import custom css-->
     <link rel="stylesheet" href="css/stylesheet.css">
 
@@ -85,7 +85,7 @@
                         </button>
                     </div>
                     <h3>{{ extensionName }}</h3>
-                    <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge">
+                    <a v-for="badge in badges" v-bind:href="'#' + badge.method + '-modal'" class="badge modal-trigger">
                         <img src="#" v-bind:src="badge.imgUrl + '?do_not_track'" alt="badge" v-bind:alt="badge.method + ' downloads of ' + extensionName" class="hoverable">
                     </a>
                     <p v-if="typeof(json.data.name) !== 'undefined'" class="statistics-description">
@@ -105,7 +105,7 @@
                     </p>
                     <p class="raw-data">
                         Need raw data ?
-                        <button class="waves-effect waves-light teal lighten-1 btn json-button" data-target="json-modal">Get JSON</button>
+                        <button class="waves-effect waves-light teal lighten-1 btn json-button modal-trigger" data-target="json-modal">Get JSON</button>
                     </p>
                     <div v-for="badge in badges" v-bind:id="badge.method + '-modal'" class="modal">
                         <div class="modal-content">
@@ -180,15 +180,13 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <!--Import materialize.js-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <!--Import clipboard.js-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 <!--Import numeral.js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <!--Import Vue.js-->
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-<!--Import overridden materialize.js -->
-<script src="js/forms.js"></script>
 <!--Import javascript for the page -->
 <script src="js/vue.js"></script>
 <!-- Github button -->
