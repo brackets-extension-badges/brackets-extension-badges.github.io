@@ -1,4 +1,4 @@
-![brackets-extension-badges](https://cloud.githubusercontent.com/assets/17952318/24578041/b908d05e-16d8-11e7-9152-47b66656ee0e.gif)
+![brackets-extension-badges](https://user-images.githubusercontent.com/17952318/33060113-6fa50e88-ce97-11e7-9694-e282b634ce9b.png)
 
 ---
 
