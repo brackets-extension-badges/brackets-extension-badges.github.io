@@ -118,7 +118,7 @@
                             <code>{{ badge.imgUrl }}</code>
                             <h5>Markdown
                                 <button class="btn-flat waves-effect waves-teal clipboard"
-                                    v-bind:data-clipboard-text="'[![Downloads](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')'">
+                                    v-bind:data-clipboard-text="'[![' + (badge.method === 'version' ? 'Version' : 'Downloads') + '](' + badge.imgUrl + ')](https://brackets-extension-badges.github.io#' + extensionName + ')'">
                                     <i class="material-icons">content_copy</i>
                                 </button>
                             </h5>
